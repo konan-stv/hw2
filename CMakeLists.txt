@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.2)
 
 set(Boost_DEBUG 1)
 
-find_package(Boost 1.65.1 REQUIRED)
-
 project(ip_filter VERSION 0.0.1)
 
 add_executable(ip_filter main.cpp)
