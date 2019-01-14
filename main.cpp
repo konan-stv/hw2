@@ -25,18 +25,18 @@ int main() {
         ip.insert((a<<24)+(b<<16)+(c<<8)+d);
     }
     
-    for(auto const& val : boost::adaptors::reverse(ip)) {
+    for (auto const& val : boost::adaptors::reverse(ip)) {
         std::cout << ((val>>24)&0xFF) << '.' << ((val>>16)&0xFF) << '.' << ((val>>8)&0xFF) << '.' << (val&0xFF) << std::endl;
     }
-    for(auto const& val : boost::adaptors::reverse(ip)) {
+    for (auto const& val : boost::adaptors::reverse(ip)) {
         if (((val>>24)&0xFF) == 1)
             std::cout << ((val>>24)&0xFF) << '.' << ((val>>16)&0xFF) << '.' << ((val>>8)&0xFF) << '.' << (val&0xFF) << std::endl;
     }
-    for(auto const& val : boost::adaptors::reverse(ip)) {
+    for (auto const& val : boost::adaptors::reverse(ip)) {
         if ((((val>>24)&0xFF) == 46) && (((val>>16)&0xFF) == 70))
             std::cout << ((val>>24)&0xFF) << '.' << ((val>>16)&0xFF) << '.' << ((val>>8)&0xFF) << '.' << (val&0xFF) << std::endl;
     }
-    for(auto const& val : boost::adaptors::reverse(ip)) {
+    for (auto const& val : boost::adaptors::reverse(ip)) {
         if ((((val>>24)&0xFF) == 46) || (((val>>16)&0xFF) == 46) || (((val>>8)&0xFF) == 46) || ((val&0xFF) == 46))
             std::cout << ((val>>24)&0xFF) << '.' << ((val>>16)&0xFF) << '.' << ((val>>8)&0xFF) << '.' << (val&0xFF) << std::endl;
     }
