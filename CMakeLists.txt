@@ -9,6 +9,7 @@ project(ip_filter VERSION 0.0.1)
 
 add_executable(ip_filter main.cpp)
 add_executable(runTests test.cpp)
+
 target_link_libraries(runTests ${GTEST_LIBRARIES} pthread)
 
 set_target_properties(ip_filter PROPERTIES
@@ -30,3 +31,7 @@ set(CPACK_GENERATOR DEB)
 set(CPACK_PACKAGE_CONTACT konan@konanlabs.ru)
 
 include(CPack)
+
+enable_testing()
+
+add_test(runTests runTests)
