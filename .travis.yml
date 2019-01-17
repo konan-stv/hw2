@@ -1,9 +1,9 @@
+sudo: true
 language: cpp
 before_script:
-- sudo apt-get install libboost-all-dev -y
-- sudo apt-get install libgtest-dev -y
+- apt-get install libboost-all-dev -y
+- apt-get install libgtest-dev -y
 - cd /usr/src/gtest
-- sudo su -
 - cmake .
 - make
 - cp *.a /usr/lib
@@ -12,6 +12,7 @@ before_script:
 script:
 - cmake .
 - cmake --build .
+- cmake --build . --target test
 - cmake --build . --target package
 deploy:
   provider: script
