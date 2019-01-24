@@ -1,6 +1,8 @@
 #include <string>
 #include <boost/range/adaptor/reversed.hpp>
 #include "ip_filter.h"
+#include <iostream>
+#include <algorithm>
 
 ipset ip;
 uint8_t e = 0;

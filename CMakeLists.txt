@@ -1,30 +1,48 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.6)
 
-find_package(GTest REQUIRED)
+## Use the variable PROJECT_NAME for changing the target name
+set( PROJECT_NAME "ip_filter" )
+
+## Set our project name
+project(${PROJECT_NAME} CXX)
+
+set (GTEST_ROOT /usr/src/gtest)
+set (GTEST_LIBRARY /usr/src/gtest/libgtest.a)
+set (GTEST_MAIN_LIBRARY /usr/src/gtest/libgtest_main.a)
+
 find_package(Boost REQUIRED)
+find_package(GTest REQUIRED)
+find_package(Threads REQUIRED)
+include_directories(${GTEST_INCLUDE_DIR})
 
-include_directories(${GTEST_INCLUDE_DIRS})
+if(DEFINED ENV{TRAVIS_BUILD_NUMBER})
+  project(${PROJECT_NAME} VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+else()
+  project(${PROJECT_NAME} VERSION 0.0.255)
+#  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -L/usr/lib/x86_64-linux-gnu")
+endif()
 
-project(ip_filter VERSION 0.0.1)
+##configure_file(version.h.in version.h)
 
-add_executable(ip_filter main.cpp)
-add_executable(runTests test.cpp)
+## Use all the *.cpp files we found under this folder for the project
+FILE(GLOB SRCS "*.cpp")
 
-target_link_libraries(runTests ${GTEST_LIBRARIES} pthread)
+## Define the executable
+##add_library(lib${PROJECT_NAME} ip_filter.cpp)
 
-set_target_properties(ip_filter PROPERTIES
-    CXX_STANDARD 14
+add_executable(runTest test.cpp)
+add_executable(${PROJECT_NAME} main.cpp)
+
+target_link_libraries(
+  runTest ${GTEST_LIBRARIES} Threads::Threads)
+
+set_target_properties(${PROJECT_NAME} runTest PROPERTIES
+    CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
-    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra"
+    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra;--std=c++1z"
 )
 
-set_target_properties(runTests PROPERTIES
-    CXX_STANDARD 14
-    CXX_STANDARD_REQUIRED ON
-    COMPILE_OPTIONS "-Wpedantic;-Wall;-Wextra"
-)
-
-install(TARGETS ip_filter RUNTIME DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 
@@ -34,4 +52,4 @@ include(CPack)
 
 enable_testing()
 
-add_test(runTests runTests)
+add_test(runTest runTest)

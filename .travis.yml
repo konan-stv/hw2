@@ -1,5 +1,16 @@
-sudo: true
-language: cpp
+sudo: required
+language: 
+ - cpp
+dist: trusty
+
+addons:
+ apt:
+  sources:
+   - ubuntu-toolchain-r-test
+
+before_install:
+ - pip install --user cpp-coveralls
+
 before_script:
 - sudo apt-get install libboost-all-dev -y
 - sudo apt-get install libgtest-dev -y
@@ -9,11 +20,13 @@ before_script:
 - sudo cp *.a /usr/lib
 - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
 - sudo apt-get update -qq
+
 script:
 - cmake .
 - cmake --build .
 - cmake --build . --target test
 - cmake --build . --target package
+
 deploy:
   provider: script
   skip_cleanup: true
