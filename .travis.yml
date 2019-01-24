@@ -7,22 +7,21 @@ addons:
  apt:
   sources:
    - ubuntu-toolchain-r-test
-
-before_install:
- - pip install --user cpp-coveralls
+  packages:
+   - g++-7
 
 before_script:
 - sudo apt-get install libboost-all-dev -y
 - sudo apt-get install libgtest-dev -y
 - cd /usr/src/gtest
-- cmake .
-- make
+- sudo cmake .
+- sudo make
 - sudo cp *.a /usr/lib
 - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
 - sudo apt-get update -qq
 
 script:
-- cmake .
+- CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
 - cmake --build .
 - cmake --build . --target test
 - cmake --build . --target package
