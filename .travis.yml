@@ -20,6 +20,7 @@ before_script:
 - sudo cp *.a /usr/lib
 - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
 - sudo apt-get update -qq
+- cd $TRAVIS_BUILD_DIR
 
 script:
 - CXX=/usr/bin/g++-7 CC=/usr/bin/gcc-7 cmake .
