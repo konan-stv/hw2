@@ -14,8 +14,9 @@ before_script:
 - sudo apt-get install libboost-all-dev -y
 - sudo apt-get install libgtest-dev -y
 - cd /usr/src/gtest
-- sudo -E cmake .
-- sudo make
+- sudo env "PATH=$PATH" cmake .
+- sudo env "PATH=$PATH" cmake --build . --target install
+#- sudo make
 - sudo cp *.a /usr/lib
 - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
 - sudo apt-get update -qq
